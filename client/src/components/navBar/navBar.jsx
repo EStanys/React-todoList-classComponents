@@ -1,26 +1,27 @@
 import React, { Component } from 'react'
 import classes from './navBar.module.css'
+import { Link } from 'react-router-dom'
 
 class NavBar extends Component{
 render(){
   return (
     <nav className={classes.navbar}>
-      <a className={classes['nav__logo']} href="/">
+      <Link className={classes['nav__logo']} to="/">
         ReactApp
-      </a>
+      </Link>
       <div className={classes['nav__links']}>
-        <a className={classes['nav__link']} href="/">
+        <Link className={classes['nav__link']} to="/">
           Home
-        </a>
-        <a className={classes['nav__link']} href="/todos">
+        </Link>
+        <Link className={classes['nav__link']} to="/todos">
           To-do
-        </a>
-        <a className={classes['nav__link']} href="/about">
+        </Link>
+        <Link className={classes['nav__link']} to="/about">
           About
-        </a>
-        <a className={classes['nav__link']} href="/contacts">
+        </Link>
+        <Link className={classes['nav__link']} to="/contacts">
           Contacts
-        </a>
+        </Link>
       </div>
     </nav>
   );
