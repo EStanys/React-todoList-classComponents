@@ -24,13 +24,22 @@
   padding-bottom: 1.5rem;
   cursor: initial;
   position: absolute;
-  animation: enter 0.6s ease-in-out;
-    
+  animation: enter 0.6s ease-in-out; 
+  overflow: hidden; 
+}
+
+.favorites-container__close {
+  animation: exit 0.6s ease-in-out;
 }
 
 @keyframes enter {
   0% {left: -65%}
   100% {left: 1.5rem}
+}
+
+@keyframes exit {
+  100% {left: -65%}
+  0% {left: 1.5rem}
 }
 
 .favorites-container h2{
@@ -44,6 +53,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 3px 0;
 }
 
 .favorites-btn {
@@ -53,3 +63,4 @@
   align-self: flex-end;
   
 }
+

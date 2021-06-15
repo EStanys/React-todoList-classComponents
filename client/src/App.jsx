@@ -5,8 +5,6 @@ import AppAddTodo from './components/appAddTodo/appAddTodo';
 import AppButton from './components/appButton/appButton';
 import FavoritesList from './components/favoritesList/favoritesList';
 
-
-
 // app styles
 import classes from './app.module.css';
 
@@ -22,7 +20,8 @@ class App extends Component {
     todos: [],
     favorites: [],
     favoritesVisible: false,
-    inputIsEmpty: false
+    inputIsEmpty: false,
+    todoDuplicate: false
   };
 
   // Mount / Update
@@ -34,11 +33,12 @@ class App extends Component {
     const favoritesResponse = await fetch(this.favoritesUrl);
     const favoritesData = await favoritesResponse.json();
 
-    this.setState({ 
-      todos: data, 
-      favorites: favoritesData, 
-      inputIsEmpty: false, 
-      favoritesVisible: false });
+    this.setState({
+      todos: data,
+      favorites: favoritesData,
+      inputIsEmpty: false,
+      favoritesVisible: false,
+    });
   }
 
   updateState = async () => {
@@ -59,28 +59,28 @@ class App extends Component {
 
     if (inputValue === '') {
       this.setState({ inputIsEmpty: true });
-      return
+      return;
     }
-      const response = await fetch(`${this.todoUrl}/new`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: Math.random(),
-          isDone: false,
-          title: inputValue,
-          isEditMode: false,
-          isInFavorites: false,
-        }),
-      });
+    const response = await fetch(`${this.todoUrl}/new`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: Math.random(),
+        isDone: false,
+        title: inputValue,
+        isEditMode: false,
+        isInFavorites: false,
+      }),
+    });
     const data = await response.json();
 
     this.setState({ inputIsEmpty: false });
 
     if (data.msg === 'add success') {
       this.updateState();
-    } 
+    }
   };
 
   // Delete
@@ -204,7 +204,6 @@ class App extends Component {
     const data = await response.json();
 
     if (data.msg === 'delete success') {
-      
       const response = await fetch(this.todoUrl + `/favoriteIcon/${id}`, {
         method: 'PUT',
         headers: {
@@ -226,7 +225,6 @@ class App extends Component {
     const data = await response.json();
 
     if (data.msg === 'delete success') {
-    
       const response = await fetch(this.todoUrl + `/favoriteIcon/${id}`, {
         method: 'PUT',
         headers: {
@@ -236,6 +234,35 @@ class App extends Component {
       });
       if (data.msg === 'delete success') this.updateState();
     }
+  };
+
+  handleAddTodoFromFavorites = async (id) => {
+    const response = await fetch(this.favoritesUrl + `/getone/${id}`);
+    const data = await response.json();
+
+    let sameTodo = this.state.todos.find(todo => todo.id === data.id)
+
+    if (sameTodo === undefined) {
+      const postResponse = await fetch(`${this.todoUrl}/new`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const postdata = await postResponse.json();
+
+      if (postdata.msg === 'add success') {
+        this.updateState();
+        this.setState({ todoDuplicate: false });
+      }
+      
+    } else {
+      this.setState({todoDuplicate: true})
+      setTimeout(() => this.setState({ todoDuplicate: false }), 2100);
+      
+    }
+
   };
 
   favoritesVisibilityHandler = () => {
@@ -249,6 +276,8 @@ class App extends Component {
       <div className={classes.App}>
         {this.state.favoritesVisible && (
           <FavoritesList
+            todoDuplicate = {this.state.todoDuplicate}
+            onHandleAddTodoFromFavorites={this.handleAddTodoFromFavorites}
             onHandleFavoriteDelete={this.removeFromFavouritesHandlerFav}
             onFavoritesVisibilityHandler={this.favoritesVisibilityHandler}
             favorites={this.state.favorites}

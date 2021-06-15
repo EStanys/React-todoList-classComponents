@@ -9,6 +9,12 @@ router.get('/', (req, res) => {
     .catch((err) => console.error(err.message));
 })
 
+router.get('/getone/:id', (req, res) => {
+  TodoFavorites.findOne({ id: +req.params.id })
+    .then((todo) => res.send(todo))
+    .catch((err) => res.status(400).json(err));
+})
+
 router.post('/add', (req, res) => {
   const newTodoFavorite = new TodoFavorites(req.body)
   newTodoFavorite

@@ -7,6 +7,7 @@ class AppAddTodo extends Component {
     
     return (
       <div className={classes['add-todo-container']}>
+        
         <i
           onClick={(e) => {
             this.props.onHandleAddTodo(e);
