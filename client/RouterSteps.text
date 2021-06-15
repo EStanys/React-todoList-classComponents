@@ -104,3 +104,23 @@ import { Route, Switch } from 'react-router'
       </div>
     </nav>
   );
+
+  6. redirect
+
+  jei ivestas neegzistuojanti linkas nuredirectinam kitur: 
+
+  import { Route, Switch, Redirect } from 'react-router'
+
+  <Switch>
+            <Route path="/todos/:id" component={SingleTodo}></Route>
+            <Route path="/todos" component={TodoPage}></Route>
+            <Route path="/about" component={AboutPage}></Route>
+            <Route path="/contacts" component={ContactsPage}></Route>
+            <Route path="/" exact component={HomePage}></Route>
+            <Route path="/not-found" exact component={NotFound}></Route>
+            <Redirect to="/not-found"></Redirect>
+          </Switch>
+
+6.1 redirectinam is vieno puslapio i kita, jei norim kad suvedus nuvestu vartotoja kazkur kitur:
+
+<Redirect from="/buble" to="/todos"></Redirect>
