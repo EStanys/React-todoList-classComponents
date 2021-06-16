@@ -1,0 +1,35 @@
+.new-post__wrapper {
+  list-style: none;
+}
+.new-post__container{
+
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(29, 29, 29, 0.704);
+  border-radius: 15px;
+  margin: 0 auto;
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.944);
+  
+}
+
+.new-post__container img{
+  border-radius: 15px;
+  margin-bottom: 1rem;
+}
+
+.new-post__container h2{
+ 
+  margin-bottom: 1rem;
+}
+
+.new-post__container p{
+ 
+  margin-bottom: 1rem;
+  padding-left: 5px;
+  padding-right: 5px;
+  text-align: center;
+}

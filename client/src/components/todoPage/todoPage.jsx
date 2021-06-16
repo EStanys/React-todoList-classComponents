@@ -271,46 +271,48 @@ class TodoPage extends Component {
 
   render() {
     return (
-      <div className={classes.todoPage}>
-        {this.state.favoritesVisible && (
-          <FavoritesList
-            todoDuplicate={this.state.todoDuplicate}
-            onHandleAddTodoFromFavorites={this.handleAddTodoFromFavorites}
-            onHandleFavoriteDelete={this.removeFromFavouritesHandlerFav}
-            onFavoritesVisibilityHandler={this.favoritesVisibilityHandler}
-            favorites={this.state.favorites}
-          />
-        )}
+      <div className={classes.container}>
+        <div className={classes.todoPage}>
+          {this.state.favoritesVisible && (
+            <FavoritesList
+              todoDuplicate={this.state.todoDuplicate}
+              onHandleAddTodoFromFavorites={this.handleAddTodoFromFavorites}
+              onHandleFavoriteDelete={this.removeFromFavouritesHandlerFav}
+              onFavoritesVisibilityHandler={this.favoritesVisibilityHandler}
+              favorites={this.state.favorites}
+            />
+          )}
 
-        <AppHeader />
-        {this.state.todos.length === 0 && <h4 className={classes.emptyList}>There is no todos</h4>}
+          <AppHeader />
+          {this.state.todos.length === 0 && <h4 className={classes.emptyList}>There is no todos</h4>}
 
-        <AppList
-          onRemoveFromFavouritesHandler={this.removeFromFavouritesHandlerApp}
-          onAddToFavouritesHandler={this.addToFavouritesHandler}
-          onHandleEditSave={this.handleEditSave}
-          onHandleEdit={this.handleEdit}
-          onHandleDelete={this.handleDelete}
-          onHandleCheckUncheck={this.handleCheckUncheck}
-          todos={this.state.todos}
-        />
-
-        <div className={classes['bottom-row']}>
-          <AppAddTodo
-            inputIsEmpty={this.state.inputIsEmpty && this.state.inputIsEmpty}
-            onHandleAddTodo={this.handleAddTodo}
+          <AppList
+            onRemoveFromFavouritesHandler={this.removeFromFavouritesHandlerApp}
+            onAddToFavouritesHandler={this.addToFavouritesHandler}
+            onHandleEditSave={this.handleEditSave}
+            onHandleEdit={this.handleEdit}
+            onHandleDelete={this.handleDelete}
+            onHandleCheckUncheck={this.handleCheckUncheck}
+            todos={this.state.todos}
           />
 
-          <div>
-            <AppButton callback={this.favoritesVisibilityHandler} background="#F0D24F" color="#2c2c2c">
-              Favorites
-            </AppButton>
-            <AppButton background="#FB817D" color="#2c2c2c" callback={this.resetTodoList}>
-              Reset
-            </AppButton>
+          <div className={classes['bottom-row']}>
+            <AppAddTodo
+              inputIsEmpty={this.state.inputIsEmpty && this.state.inputIsEmpty}
+              onHandleAddTodo={this.handleAddTodo}
+            />
+
+            <div>
+              <AppButton callback={this.favoritesVisibilityHandler} background="#F0D24F" color="#2c2c2c">
+                Favorites
+              </AppButton>
+              <AppButton background="#FB817D" color="#2c2c2c" callback={this.resetTodoList}>
+                Reset
+              </AppButton>
+            </div>
           </div>
+          {this.state.inputIsEmpty && <p className={classes['input-empty-err']}>*required field</p>}
         </div>
-        {this.state.inputIsEmpty && <p className={classes['input-empty-err']}>*required field</p>}
       </div>
     );
   }

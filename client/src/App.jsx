@@ -7,6 +7,8 @@ import AboutPage from './pages/about'
 import HomePage from './pages/home'
 import SingleTodo from './pages/singleTodo'
 import NotFound from './pages/404'
+import BlogPage from './pages/blogPage/blogPage'
+import BlogPageNew from './pages/blogPageNew/blogPageNew'
 
 // app styles
 import classes from './app.module.css';
@@ -25,7 +27,12 @@ class App extends Component{
             <Route path="/contacts" component={ContactsPage}></Route>
             <Route path="/" exact component={HomePage}></Route>
             <Route path="/not-found" exact component={NotFound}></Route>
-            <Redirect from="/buble" to="/todos"></Redirect>
+
+            {/* blog dropdown */}
+            <Route path="/blog/new" component={BlogPageNew}></Route>
+            <Route path="/blog" component={BlogPage}></Route>
+
+            {/* not found */}
             <Redirect to="/not-found"></Redirect>
           </Switch>
 
