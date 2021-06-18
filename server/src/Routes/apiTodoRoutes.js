@@ -16,7 +16,7 @@ router.post('/new', (req, res) => {
   newTodo
     .save()
     .then((result) => res.json({ msg: 'add success' }))
-    .catch((err) => res.status(400).json(err));
+    .catch((err) => res.status(400).json({ msg: 'add failed', err }));
 
 });
 

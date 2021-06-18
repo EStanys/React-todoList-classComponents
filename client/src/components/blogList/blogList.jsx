@@ -13,16 +13,25 @@ class BlogList extends Component {
 
   componentDidMount = async () => {
     const resp = await fetch(this.blogUrl);
-    const data = await resp.json()
-    this.setState({allPosts: data.allPosts});
-    console.log(' this.state.allPosts:',  this.state.allPosts);
+    const data = await resp.json();
+    this.setState({ allPosts: data.allPosts });
+    console.log(' this.state.allPosts:', this.state.allPosts);
   };
+
+  readMoreHandler = async (id) => {
+    console.log('id', id);
+  }
 
   render() {
     return (
       <ul className={classes['blog-list']}>
         {this.state.allPosts.map((b) => (
-          <BlogListEl key={b._id} onePost={b} imgLink={`https://picsum.photos/seed/${Math.random()}/300/200`} />
+          <BlogListEl
+            onReadMoreHandler={this.readMoreHandler}
+            key={b._id}
+            onePost={b}
+            imgLink={`https://picsum.photos/seed/${Math.random()}/300/200`}
+          />
         ))}
       </ul>
     );

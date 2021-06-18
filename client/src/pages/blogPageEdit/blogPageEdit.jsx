@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Button from '../../components/appButton/appButton';
-import classes from './blogPageNew.module.css';
+import classes from './blogPageEdit.module.css';
 import { Link } from 'react-router-dom'
 
 export default class BlogPageNew extends Component {
@@ -12,6 +12,12 @@ export default class BlogPageNew extends Component {
     };
   }
 
+  componentDidMount = async () => {
+    const resp = await fetch(`${this.blogUrl}/single/${this.props.match.params.id}`);
+    const data = await resp.json();
+    if (data.msg === 'get one success') this.setState({ formData: data.onePost });
+  }
+
   formInputHandler = (event) => {
     const formDataCopy = { ...this.state.formData };
     formDataCopy[event.target.name] = event.target.value;
@@ -20,24 +26,25 @@ export default class BlogPageNew extends Component {
     });
   };
 
-  addNewBlogPost = async (event) => {
+  saveBlogPost = async (event) => {
     event.preventDefault();
     const formDataCopy = { ...this.state.formData };
 
     try {
-      const resp = await fetch(`${this.blogUrl}/new`, {
-        method: 'POST',
+      const resp = await fetch(`${this.blogUrl}/single/edit/${this.props.match.params.id}`, {
+        method: 'PUT',
         headers: {
           'content-type': 'application/json',
         },
         body: JSON.stringify(formDataCopy),
       });
       const data = await resp.json();
-      data.msg === 'add success' && this.setState({ formData: { title: '', author: '', postText: '' } });
+      data.msg === 'edit success' && this.setState({ formData: { title: '', author: '', postText: '' } });
+      data.msg === 'edit success' && this.props.history.push(`/blog/single/${this.props.match.params.id}`);
 
-      console.log('front msg:', data.msg);
+      
     } catch (err) {
-      console.log('addNewBlogPost err', err);
+      console.log('saveBlogPost err', err);
     }
   };
 
@@ -45,9 +52,9 @@ export default class BlogPageNew extends Component {
   render() {
     return (
       <section className={classes['add-blog-wrapper']}>
-        <h2 className={classes['add-blog__header']}>Add new Blog post</h2>
+        <h2 className={classes['add-blog__header']}>Edit Blog post</h2>
 
-        <form onSubmit={this.addNewBlogPost} className={classes['add-blog__form']}>
+        <form onSubmit={this.saveBlogPost} className={classes['add-blog__form']}>
           <label className={classes['add-blog__title']} htmlFor="title">
             Post Title
           </label>
@@ -90,7 +97,7 @@ export default class BlogPageNew extends Component {
 
           <div>
             <Button type="submit" className={classes['add-blog__btn']} background="#3CB371" color="#2c2c2c" width="25%">
-              Add post
+              Save post
             </Button>
 
             <Link className={classes['add-blog__redirect-link']} to="/blog">

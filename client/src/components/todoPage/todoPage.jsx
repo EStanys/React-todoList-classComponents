@@ -7,8 +7,6 @@ import FavoritesList from '../favoritesList/favoritesList';
 
 import classes from './todoPage.module.css';
 
-
-
 class TodoPage extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +21,9 @@ class TodoPage extends Component {
     favoritesVisible: false,
     inputIsEmpty: false,
     todoDuplicate: false,
+    errors: {
+      addTodo: '',
+    },
   };
 
   // Mount / Update
@@ -62,25 +63,33 @@ class TodoPage extends Component {
       this.setState({ inputIsEmpty: true });
       return;
     }
-    const response = await fetch(`${this.todoUrl}/new`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: Math.random(),
-        isDone: false,
-        title: inputValue,
-        isEditMode: false,
-        isInFavorites: false,
-      }),
-    });
-    const data = await response.json();
+    try {
+      const response = await fetch(`${this.todoUrl}/new`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: Math.random(),
+          isDone: false,
+          title: inputValue,
+          isEditMode: false,
+          isInFavorites: false,
+        }),
+      });
+      const data = await response.json();
 
-    this.setState({ inputIsEmpty: false });
+      this.setState({ inputIsEmpty: false });
 
-    if (data.msg === 'add success') {
-      this.updateState();
+      if (data.msg === 'add success') {
+        this.updateState();
+      }
+      if (data.msg === 'add failed') {
+        this.setState({ inputIsEmpty: true });
+      }
+      
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -193,6 +202,7 @@ class TodoPage extends Component {
 
       this.updateState();
     }
+    
   };
 
   removeFromFavouritesHandlerApp = async (id, isInFavorites, e) => {
@@ -298,7 +308,7 @@ class TodoPage extends Component {
 
           <div className={classes['bottom-row']}>
             <AppAddTodo
-              inputIsEmpty={this.state.inputIsEmpty && this.state.inputIsEmpty}
+              // inputIsEmpty={this.state.inputIsEmpty && this.state.inputIsEmpty}
               onHandleAddTodo={this.handleAddTodo}
             />
 

@@ -9,6 +9,8 @@ import SingleTodo from './pages/singleTodo'
 import NotFound from './pages/404'
 import BlogPage from './pages/blogPage/blogPage'
 import BlogPageNew from './pages/blogPageNew/blogPageNew'
+import BlogPageSingle from './pages/blogPageSingle/blogPageSingle'
+import BlogPageEdit from './pages/blogPageEdit/blogPageEdit'
 
 // app styles
 import classes from './app.module.css';
@@ -30,6 +32,8 @@ class App extends Component{
 
             {/* blog dropdown */}
             <Route path="/blog/new" component={BlogPageNew}></Route>
+            <Route path="/blog/single/edit/:id" component={BlogPageEdit}></Route>
+            <Route path="/blog/single/:id" component={BlogPageSingle}></Route>
             <Route path="/blog" component={BlogPage}></Route>
 
             {/* not found */}

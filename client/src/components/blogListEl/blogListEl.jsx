@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import classes from './blogListEl.module.css';
-import Button from '../appButton/appButton'
+import Button from '../appButton/appButton';
+
 
 
 class BlogListEl extends Component {
@@ -10,8 +12,8 @@ class BlogListEl extends Component {
   }
 
   render() {
-    const {title, author, postText, updatedAt, _id} = this.props.onePost
-    const { imgLink } = this.props
+    const { title, author, postText, updatedAt, _id,  } = this.props.onePost;
+    const { imgLink, onReadMoreHandler } = this.props;
     
     const postTextRef = postText
       .slice(0, 50)
@@ -19,7 +21,7 @@ class BlogListEl extends Component {
       .slice(0, postText.length - 1)
       .join(' ') + '...'
 
-    console.log('titleRef', postTextRef);
+    
     
     return (
       <li className={classes['new-post__wrapper']}>
@@ -30,7 +32,9 @@ class BlogListEl extends Component {
             Author: <strong>{author}</strong>
           </p>
           <p>{postTextRef}</p>
-          <Button>Read more</Button>
+          <Link id={_id} className={classes.btn} to={`/blog/single/${_id}`}>
+            Read more
+          </Link>
         </div>
       </li>
     );
