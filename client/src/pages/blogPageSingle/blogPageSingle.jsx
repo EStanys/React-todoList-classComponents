@@ -39,51 +39,53 @@ export default class BlogPageSingle extends Component {
     const { author, title, postText, _id } = this.state.singleBlog;
 
     return (
-      <section className={classes['single-post-wrapper']}>
-        <h2 className={classes['single-post__header']}>Happy reading!</h2>
-        <div className={classes['single-post__container']}>
-          <img src={imgLink} alt="" />
-          <h2>{title}</h2>
-          <p>
-            Author: <strong>{author}</strong>
-          </p>
-          <p>{postText}</p>
-          <div className={classes['single-post-btns']}>
-            <Button
-              callback={() => {
-                this.editBlogPostHandler();
-              }}
-              background="#F0D24F"
-              color="#2c2c2c"
-              width="25%"
-            >
-              Edit
-            </Button>
+      <div className={classes.wrapper}>
+        <section className={classes['single-post-wrapper']}>
+          <h2 className={classes['single-post__header']}>Happy reading!</h2>
+          <div className={classes['single-post__container']}>
+            <img src={imgLink} alt="" />
+            <h2>{title}</h2>
+            <p>
+              Author: <strong>{author}</strong>
+            </p>
+            <p>{postText}</p>
+            <div className={classes['single-post-btns']}>
+              <Button
+                callback={() => {
+                  this.editBlogPostHandler();
+                }}
+                background="#F0D24F"
+                color="#2c2c2c"
+                width="25%"
+              >
+                Edit
+              </Button>
 
-            <Button
-              callback={() => {
-                this.deleteBlogPostHandler();
-              }}
-              background="#FB817D"
-              color="#2c2c2c"
-              width="25%"
-            >
-              Delete
-            </Button>
+              <Button
+                callback={() => {
+                  this.deleteBlogPostHandler();
+                }}
+                background="#FB817D"
+                color="#2c2c2c"
+                width="25%"
+              >
+                Delete
+              </Button>
 
-            <Button
-              callback={() => {
-                this.backToBlogsHandler();
-              }}
-              background="#3CB371"
-              color="#2c2c2c"
-              width="25%"
-            >
-              Back to Blogs
-            </Button>
+              <Button
+                callback={() => {
+                  this.backToBlogsHandler();
+                }}
+                background="#3CB371"
+                color="#2c2c2c"
+                width="25%"
+              >
+                Back to Blogs
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     );
   }
 }

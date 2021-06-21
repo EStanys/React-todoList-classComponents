@@ -1,7 +1,7 @@
 .add-blog-wrapper {
   width: 100%;
   height: 100vh;
-  background-image: linear-gradient(180deg, rgba(0,0,0,0.8064012096774193) 0%,rgba(0, 0, 0, 0.506) 50%, rgba(0,0,0,0.1) 100%), url('../../images/lbgBcgr.jpeg');
+  background-image: linear-gradient(180deg, rgba(0,0,0,0.8064012096774193) 0%,rgba(0, 0, 0, 0.506) 50%, rgba(0,0,0,0.1) 100%), url('../../images/blgMainBcgr.jpg');
   background-size: cover;
   object-position: center;
   background-repeat: no-repeat;
